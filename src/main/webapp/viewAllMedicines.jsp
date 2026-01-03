@@ -25,55 +25,63 @@
     </style>
 </head>
 <body>
-    <h2>All Medicine Records</h2>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
+<h2>All Medicine Records</h2>
 
-        <%
-            Connection con = null;
-            Statement st = null;
-            ResultSet rs = null;
-            try {
-                // Load Oracle JDBC Driver
-                Class.forName("oracle.jdbc.driver.OracleDriver");
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
 
-                // Connect to Oracle DB
-                con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@localhost:1521:xe", "system", "admin"
-                );
+<%
+    Connection con = null;
+    Statement st = null;
+    ResultSet rs = null;
 
-                // Execute query
-                st = con.createStatement();
-                rs = st.executeQuery("SELECT * FROM medicine");
+    try {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
 
-                while(rs.next()) {
-        %>
-        <tr>
-            <td><%= rs.getInt("id") %></td>
-            <td><%= rs.getString("name") %></td>
-            <td><%= rs.getDouble("price") %></td>
-            <td><%= rs.getInt("quantity") %></td>
-        </tr>
-        <%
-                }
-            } catch(Exception e) {
-                out.println("<tr><td colspan='4'>Error: " + e.getMessage() + "</td></tr>");
-            } finally {
-                // Close resources
-                try { if(rs != null) rs.close(); } catch(Exception e) {}
-                try { if(st != null) st.close(); } catch(Exception e) {}
-                try { if(con != null) con.close(); } catch(Exception e) {}
-            }
-        %>
-    </table>
+        con = DriverManager.getConnection(
+            "jdbc:oracle:thin:@localhost:1521:xe",
+            "system",
+            "admin"
+        );
 
-    <br>
-    <a href="menu.html">Back to Menu</a>
+        st = con.createStatement();
+        rs = st.executeQuery(
+            "SELECT RECORDID, MEDICINENAME, PRICE, QUANTITY FROM PHARMACY_TB"
+        );
+
+        while (rs.next()) {
+%>
+    <tr>
+        <td><%= rs.getString("RECORDID") %></td>
+        <td><%= rs.getString("MEDICINENAME") %></td>
+        <td><%= rs.getDouble("PRICE") %></td>
+        <td><%= rs.getInt("QUANTITY") %></td>
+    </tr>
+<%
+        }
+    } catch (Exception e) {
+%>
+    <tr>
+        <td colspan="4">Error: <%= e.getMessage() %></td>
+    </tr>
+<%
+    } finally {
+        try { if (rs != null) rs.close(); } catch(Exception e) {}
+        try { if (st != null) st.close(); } catch(Exception e) {}
+        try { if (con != null) con.close(); } catch(Exception e) {}
+    }
+%>
+
+</table>
+
+<br>
+<a href="menu.html">Back to Menu</a>
+
 </body>
 </html>
