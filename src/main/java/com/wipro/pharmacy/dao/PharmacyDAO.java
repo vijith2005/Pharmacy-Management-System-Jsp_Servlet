@@ -47,7 +47,7 @@ public class PharmacyDAO {
         return result;
     }
 
-    // ================= FETCH SINGLE RECORD =================
+  
     public PharmacyBean fetchRecord(String medicineName, java.util.Date purchaseDate) {
 
         PharmacyBean bean = null;
@@ -82,12 +82,12 @@ public class PharmacyDAO {
         return bean;
     }
 
-    // ================= CHECK RECORD EXISTS =================
+  
     public boolean recordExists(String medicineName, java.util.Date purchaseDate) {
         return fetchRecord(medicineName, purchaseDate) != null;
     }
 
-    // ================= GENERATE RECORD ID =================
+    
     public String generateRecordID(String medicineName, java.util.Date purchaseDate)
             throws Exception {
 
@@ -111,7 +111,7 @@ public class PharmacyDAO {
         return recordId;
     }
 
-    // ================= FETCH ALL RECORDS =================
+  
     public List<PharmacyBean> fetchAllRecords() {
 
         List<PharmacyBean> list = new ArrayList<>();
